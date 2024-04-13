@@ -39,10 +39,67 @@ public class sortingAlgorithm {
 
         return theUnsortedArray;
     }
-    public static int [] mergeSort(int [] theUnsortedArray){
+    public static void mergeSort(int [] theUnsortedArray){
+        if(theUnsortedArray.length > 1){
+            int mid = theUnsortedArray.length/2;
+//            int [] leftSide = new int[mid];
+//            int [] rightSide = new int[mid];
 
 
-        return theUnsortedArray;
+//            for(int i = 0; i < mid; i++){
+//                leftSide[i] = theUnsortedArray[i];
+//                rightSide[i] = theUnsortedArray[i+mid];
+//            }
+
+            int[] leftSide = new int[mid];
+            int[] rightSide = new int[theUnsortedArray.length - mid];
+
+// Split the array into left and right parts
+            for (int i = 0; i < mid; i++) {
+                leftSide[i] = theUnsortedArray[i];
+            }
+            for (int i = mid; i < theUnsortedArray.length; i++) {
+                rightSide[i - mid] = theUnsortedArray[i];
+            }
+
+            mergeSort(leftSide);
+            mergeSort(rightSide);
+
+            merge(theUnsortedArray, leftSide, rightSide);
+        }
+
+    }
+
+    public static void merge(int [] theUnsortedArray, int [] left, int [] right ){
+        int i = 0, j = 0, k = 0;
+
+        // merging temporary arrays back into theUnsortedArray
+        while (i < left.length && j < right.length){
+            if (left[i] <= right[j]){ // ensures the recurrence
+                theUnsortedArray[k] = left[i];
+                i += 1;
+            }else{
+                theUnsortedArray[k] = right[j];
+                j += 1;
+            }
+            k += 1;
+        }
+
+        //Copy the remaining elements of left, if there are any
+        while (i < left.length){
+            theUnsortedArray[k++] = left[i++];
+//            i += 1;
+//            k += 1;
+        }
+
+
+        //Copy the remaining elements of right, if there are any
+        while (j < right.length){
+            theUnsortedArray[k++] = right[j++];
+//            j += 1;
+//            k += 1;
+        }
+
     }
 
 }
